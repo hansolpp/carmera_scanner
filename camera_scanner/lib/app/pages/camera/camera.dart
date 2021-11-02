@@ -1,0 +1,1 @@
+export 'bloc/camera_page_bloc.dart';

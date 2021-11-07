@@ -1,6 +1,7 @@
-import 'package:camera_scanner/core/route/route_name.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:camera_scanner/core/route/route_name.dart';
+import 'package:camera_scanner/app/pages/camera/camera.dart';
 
 class CameraPage extends StatelessWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -14,9 +15,6 @@ class CameraPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Align(
-      alignment: Alignment.center,
-      child: Text('test'),
-    );
+    return const CameraView();
   }
 }

@@ -7,14 +7,16 @@ class CameraPage extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute<void>(
-      builder: (_) =>  const CameraPage(),
-      settings:  const RouteSettings(name: cameraRouteName),
+      builder: (_) => const CameraPage(),
+      settings: const RouteSettings(name: cameraRouteName),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return const Align(
+      alignment: Alignment.center,
+      child: Text('test'),
+    );
   }
 }

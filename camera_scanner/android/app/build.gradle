@@ -25,9 +25,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-android {
-    compileSdkVersion 30
+apply plugin: 'com.google.gms.google-services'
 
+// 컴파일/빌드/버전 설정
+android {
+    compileSdkVersion 30 // 컴파일 SDK 버전(컴파일러 버전)
+
+    // 컴파일 설정
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,18 +47,21 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.elliot.camera_scanner"
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        applicationId "com.elliot.camera_scanner" // 패키지명(앱 식별자)
+        minSdkVersion 16 // 최소 SDK 버전(최소 지원 범위)
+        targetSdkVersion 30 // 타겟 SDK 버전(개발시 이용하고 있는 라이브러리 버전)
+        versionCode flutterVersionCode.toInteger() // 버전 코드(앱의 버전 정보)
+        versionName flutterVersionName // 사용자에게 노출되는 버전
     }
 
+    // 빌드 설정
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            minifyEnabled true // 빌드시 코드 난독화 설정(true: realease빌드시에만 코드 난독화)
+
         }
     }
 }
@@ -63,6 +70,7 @@ flutter {
     source '../..'
 }
 
+// 외부 라이브러리 설정
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

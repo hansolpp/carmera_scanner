@@ -13,7 +13,8 @@ void main() async {
 
   runApp(
     const DependencyInjection(
-      child: MlCameraApp(),
+      isNotRequired: true,
+      child: MlCameraApp()
     ),
   );
 }

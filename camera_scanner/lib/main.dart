@@ -16,7 +16,7 @@ void main() async {
 
     await CameraManager.getAvailableCamera();
   } on Exception catch (e) {
-    debugPrint('Error::Main -> Initialized | $e');
+    debugPrint('Error::Main -> At Initialized | $e');
   }
 
   runApp(

@@ -14,7 +14,7 @@ void main() async {
 
     Bloc.observer = AppBlocObserver();
 
-    CameraManager.getAvailableCamera();
+    await CameraManager.getAvailableCamera();
   } on Exception catch (e) {
     debugPrint('Error::Main -> Initialized | $e');
   }

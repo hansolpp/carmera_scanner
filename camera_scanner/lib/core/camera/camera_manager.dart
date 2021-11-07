@@ -1,6 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 
+const backCamera = 0;
+const frontCamera = 1;
+
 class CameraManager {
   CameraManager._();
 

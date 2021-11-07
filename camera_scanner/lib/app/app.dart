@@ -14,6 +14,7 @@ class _MlCameraApp extends State<MlCameraApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: CameraPage(),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:developer' as developer_tool;
+import 'dart:developer' as developer;
 
 class AppBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    developer_tool.log(
+    developer.log(
       '\n'
           '┌─[onCreate][-][-][-]─────────────────────────────\n'
           'Bloc: ${bloc.runtimeType}\n'
@@ -16,7 +16,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    developer_tool.log(
+    developer.log(
       '\n'
           '┌─────[-][onEvent][-][-]──────────────────────────\n'
           'Bloc: ${bloc.runtimeType}\n'
@@ -28,7 +28,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    developer_tool.log(
+    developer.log(
       '\n'
           '┌───────────────[-][-][onChange][-]───────────────\n'
           'Bloc: ${bloc.runtimeType}\n'
@@ -40,7 +40,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    developer_tool.log(
+    developer.log(
       '\n'
           '┌─────────────────────────[-][-][-][onTransition]─\n'
           'Bloc: ${bloc.runtimeType}\n'
@@ -52,7 +52,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-    developer_tool.log(
+    developer.log(
       '\n'
           '┌─[onError]──────────────────────────────────────\n'
           'Bloc: ${bloc.runtimeType}\n'
@@ -66,7 +66,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    developer_tool.log(
+    developer.log(
       '\n'
           '┌─[onClose]──────────────────────────────────────\n'
           'Bloc: ${bloc.runtimeType}\n'

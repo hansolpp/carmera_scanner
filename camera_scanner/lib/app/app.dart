@@ -1,3 +1,4 @@
+import 'package:camera_scanner/app/pages/camera/camera_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -12,8 +13,8 @@ class _MlCameraApp extends State<MlCameraApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-
+    return const MaterialApp(
+      home: CameraPage(),
     );
   }
 }

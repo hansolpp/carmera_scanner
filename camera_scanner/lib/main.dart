@@ -7,17 +7,13 @@ import 'package:camera_scanner/app/app.dart';
 import 'package:camera_scanner/core/core.dart';
 
 void main() async {
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-    await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
-    Bloc.observer = AppBlocObserver();
+  Bloc.observer = AppBlocObserver();
 
-    await CameraManager.getAvailableCamera();
-  } on Exception catch (e) {
-    debugPrint('Error::Main -> At Initialized | $e');
-  }
+  await CameraManager.getAvailableCamera();
 
   runApp(
     const DependencyInjection(isNotRequired: true, child: MlCameraApp()),

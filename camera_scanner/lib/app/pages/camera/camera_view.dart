@@ -14,6 +14,7 @@ class CameraView extends StatefulWidget {
 
 class _CameraViewState extends State<CameraView> {
   late final CameraController _controller;
+  final VisionDetectorManager visionDetectorManager = VisionDetectorManager();
 
   @override
   void initState() {
@@ -52,6 +53,12 @@ class _CameraViewState extends State<CameraView> {
     _controller.initialize().then((_) {
       if (!mounted) return;
       setState(() {});
+    });
+
+    _controller.startImageStream((CameraImage image) {
+      visionDetectorManager.processImage(image);
+      // Here we will scan the text from the image
+      // which we are getting from the camera.
     });
   }
 

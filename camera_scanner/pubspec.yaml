@@ -42,6 +42,9 @@ dependencies:
   # Camera
   camera: 0.9.4+3
 
+  # Google ML
+  google_ml_kit: 0.7.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

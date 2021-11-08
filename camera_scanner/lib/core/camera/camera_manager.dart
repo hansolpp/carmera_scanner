@@ -1,5 +1,5 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
+import 'package:camera/camera.dart';
 
 const backCamera = 0;
 const frontCamera = 1;
@@ -11,11 +11,12 @@ class CameraManager {
 
   static get availableCamera => cameras;
 
-  static getAvailableCamera() async {
+  static Future<List<CameraDescription>> getAvailableCamera() async {
     try {
-      cameras = await availableCameras();
+      return cameras = await availableCameras();
     } on CameraException catch (e) {
       debugPrint('CameraError: ${e.description}');
     }
+    return [];
   }
 }

@@ -21,13 +21,16 @@ class VisionDetectorManager {
     RecognisedText recognisedText =
         RecognisedText.fromMap({'text': '', 'blocks': []});
 
-    if (recognisedText.text.isEmpty || _isBusy) return recognisedText;
+    if (_isBusy) return recognisedText;
     _isBusy = true;
 
     InputImage inputImage = _convertInputImage(cameraImage);
 
     recognisedText = await textDetector.processImage(inputImage);
-    developer.log('Found ${recognisedText.blocks.length} textBlocks');
+    if (recognisedText.text.isNotEmpty) {
+      developer.log('Found ${recognisedText.blocks.length} textBlocks');
+      developer.log('Found ${recognisedText.text}');
+    }
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = TextDetectorPainter(

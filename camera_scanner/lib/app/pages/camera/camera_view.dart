@@ -73,7 +73,6 @@ class _CameraViewState extends State<CameraView> {
         _isDetecting = true;
       });
       recognisedText = await visionDetectorManager.processImage(image);
-      developer.log('$recognisedText');
       _isDetecting = false;
     });
     return true;

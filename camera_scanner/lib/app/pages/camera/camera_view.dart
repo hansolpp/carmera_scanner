@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:camera/camera.dart';
 import 'dart:developer' as developer;
 
@@ -13,73 +14,89 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  late final CameraController _controller;
+  late final CameraController _cameraController;
+  late Future<bool> _isInitialized;
+  late RecognisedText recognisedText;
+  bool _isDetecting = false;
   final VisionDetectorManager visionDetectorManager = VisionDetectorManager();
 
   @override
   void initState() {
     super.initState();
-    _initializeCamera();
+    _isInitialized = _initializeCamera();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _cameraController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return buildCameraPreview();
+    return FutureBuilder<bool>(
+      future: _isInitialized,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return CameraPreview(_cameraController);
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget buildCameraPreview() {
-    if (!_controller.value.isInitialized) {
+    if (!_cameraController.value.isInitialized) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
 
-    return CameraPreview(_controller);
+    return CameraPreview(_cameraController);
   }
 
-  void _initializeCamera() async {
+  Future<bool> _initializeCamera() async {
     final CameraController cameraController = CameraController(
       CameraManager.availableCamera[backCamera],
       ResolutionPreset.high,
     );
-    _controller = cameraController;
+    _cameraController = cameraController;
 
-    _controller.initialize().then((_) {
-      if (!mounted) return;
-      setState(() {});
-    });
+    await _cameraController.initialize();
 
-    _controller.startImageStream((CameraImage image) {
-      visionDetectorManager.processImage(image);
-      // Here we will scan the text from the image
-      // which we are getting from the camera.
+    if (!mounted) return false;
+    _cameraController.startImageStream((CameraImage image) async {
+      if (_isDetecting) return;
+
+      setState(() {
+        _isDetecting = true;
+      });
+      recognisedText = await visionDetectorManager.processImage(image);
+      developer.log('$recognisedText');
+      _isDetecting = false;
     });
+    return true;
   }
 
   Future<String?> _takePicture() async {
-    if (!_controller.value.isInitialized) {
+    if (!_cameraController.value.isInitialized) {
       developer.log("Controller is not initialized");
       return null;
     }
 
     String? imagePath;
 
-    if (_controller.value.isTakingPicture) {
+    if (_cameraController.value.isTakingPicture) {
       developer.log("Processing is in progress...");
       return null;
     }
 
     try {
       // Turning off the camera flash
-      _controller.setFlashMode(FlashMode.off);
+      _cameraController.setFlashMode(FlashMode.off);
       // Returns the image in cross-platform file abstraction
-      final XFile file = await _controller.takePicture();
+      final XFile file = await _cameraController.takePicture();
       // Retrieving the path
       imagePath = file.path;
     } on CameraException catch (e) {

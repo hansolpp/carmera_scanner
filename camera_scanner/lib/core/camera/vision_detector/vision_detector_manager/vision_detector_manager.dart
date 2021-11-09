@@ -12,18 +12,21 @@ class VisionDetectorManager {
   VisionDetectorManager() : textDetector = GoogleMlKit.vision.textDetector();
 
   TextDetector textDetector;
-  bool _isBusy = false;
   CustomPaint? customPaint;
+  bool _isBusy = false;
 
   get isBusy => _isBusy;
 
-  Future<void> processImage(CameraImage cameraImage) async {
-    if (_isBusy) return;
+  Future<RecognisedText> processImage(CameraImage cameraImage) async {
+    RecognisedText recognisedText =
+        RecognisedText.fromMap({'text': '', 'blocks': []});
+
+    if (recognisedText.text.isEmpty || _isBusy) return recognisedText;
     _isBusy = true;
 
     InputImage inputImage = _convertInputImage(cameraImage);
 
-    final recognisedText = await textDetector.processImage(inputImage);
+    recognisedText = await textDetector.processImage(inputImage);
     developer.log('Found ${recognisedText.blocks.length} textBlocks');
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
@@ -39,12 +42,13 @@ class VisionDetectorManager {
     // if (mounted) {
     //   setState(() {});
     // }
+    return recognisedText;
   }
 
   InputImage _convertInputImage(CameraImage cameraImage) {
-    Uint8List planes = _concatenatePlanes(cameraImage.planes);
     InputImageRotation imageRotation = _rotationIntToImageRotation(0);
     InputImageData metaData = _buildMetaData(cameraImage, imageRotation);
+    Uint8List planes = _concatenatePlanes(cameraImage.planes);
 
     return InputImage.fromBytes(bytes: planes, inputImageData: metaData);
   }
@@ -58,22 +62,31 @@ class VisionDetectorManager {
   }
 
   static InputImageData _buildMetaData(
-    CameraImage image,
+    CameraImage cameraImage,
     InputImageRotation rotation,
   ) {
+    final inputImageFormat =
+        InputImageFormatMethods.fromRawValue(cameraImage.format.raw) ??
+            InputImageFormat.NV21;
+
+    final Size imageSize =
+        Size(cameraImage.width.toDouble(), cameraImage.height.toDouble());
+
+    final planeData = cameraImage.planes.map(
+      (Plane plane) {
+        return InputImagePlaneMetadata(
+          bytesPerRow: plane.bytesPerRow,
+          height: plane.height,
+          width: plane.width,
+        );
+      },
+    ).toList();
+
     return InputImageData(
-      inputImageFormat: image.format.raw,
-      size: Size(image.width.toDouble(), image.height.toDouble()),
+      inputImageFormat: inputImageFormat,
+      size: imageSize,
       imageRotation: rotation,
-      planeData: image.planes.map(
-        (Plane plane) {
-          return InputImagePlaneMetadata(
-            bytesPerRow: plane.bytesPerRow,
-            height: plane.height,
-            width: plane.width,
-          );
-        },
-      ).toList(),
+      planeData: planeData,
     );
   }
 

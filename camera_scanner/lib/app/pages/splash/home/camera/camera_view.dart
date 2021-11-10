@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:camera/camera.dart';
 import 'dart:developer' as developer;
 
 import 'package:camera_scanner/core/camera/camera.dart';
 
 class CameraView extends StatefulWidget {
-  const CameraView({Key? key}) : super(key: key);
+  const CameraView({
+    this.cameraController,
+    this.onStream,
+    Key? key,
+  }) : super(key: key);
+
+  final CameraController? cameraController;
+  final ValueChanged<CameraImage>? onStream;
 
   @override
   State<StatefulWidget> createState() => _CameraViewState();
@@ -15,15 +20,16 @@ class CameraView extends StatefulWidget {
 
 class _CameraViewState extends State<CameraView> {
   late final CameraController _cameraController;
-  late Future<bool> _isInitialized;
-  late RecognisedText recognisedText;
+  late Future<bool> _isCameraInitialized;
   bool _isDetecting = false;
-  final VisionDetectorManager visionDetectorManager = VisionDetectorManager();
 
   @override
   void initState() {
     super.initState();
-    _isInitialized = _initializeCamera();
+    _isCameraInitialized = _initializeCamera(
+      controller: widget.cameraController,
+      position: backCamera,
+    );
   }
 
   @override
@@ -35,7 +41,7 @@ class _CameraViewState extends State<CameraView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
-      future: _isInitialized,
+      future: _isCameraInitialized,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return CameraPreview(_cameraController);
@@ -46,22 +52,16 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  Widget buildCameraPreview() {
-    if (!_cameraController.value.isInitialized) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
-    return CameraPreview(_cameraController);
-  }
-
-  Future<bool> _initializeCamera() async {
+  Future<bool> _initializeCamera({
+    CameraController? controller,
+    int? position,
+  }) async {
     final CameraController cameraController = CameraController(
-      CameraManager.availableCamera[backCamera],
+      CameraManager.availableCamera[position],
       ResolutionPreset.high,
     );
-    _cameraController = cameraController;
+
+    _cameraController = controller ?? cameraController;
 
     await _cameraController.initialize();
 
@@ -72,7 +72,7 @@ class _CameraViewState extends State<CameraView> {
       setState(() {
         _isDetecting = true;
       });
-      recognisedText = await visionDetectorManager.processImage(image);
+      widget.onStream?.call(image);
       _isDetecting = false;
     });
     return true;

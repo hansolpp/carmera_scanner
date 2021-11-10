@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:camera_scanner/app/pages/camera/camera.dart';
+import 'package:camera_scanner/app/pages/splash/home/camera_image_detector.dart';
 
 class MlCameraApp extends StatefulWidget {
   const MlCameraApp({Key? key}) : super(key: key);
@@ -10,12 +10,11 @@ class MlCameraApp extends StatefulWidget {
 }
 
 class _MlCameraApp extends State<MlCameraApp> {
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CameraPage(),
+      home: CameraImageDetectorPage(),
     );
   }
 }

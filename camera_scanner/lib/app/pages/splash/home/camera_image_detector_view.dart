@@ -15,7 +15,6 @@ class CameraImageDetectorView extends StatefulWidget {
 }
 
 class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
-
   final VisionDetectorManager visionDetectorManager = VisionDetectorManager();
   final CameraController _cameraController = CameraController(
     CameraManager.availableCamera[backCamera],
@@ -33,6 +32,14 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
           onStream: (CameraImage image) async {
             recognisedText = await visionDetectorManager.processImage(image);
           },
+        ),
+        Container(
+          decoration: ShapeDecoration(
+            shape: ScannerOverlayShape(
+              cutOutWidth: 300,
+              cutOutHeight: 300,
+            ),
+          ),
         ),
       ],
     );

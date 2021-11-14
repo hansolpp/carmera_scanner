@@ -1,1 +1,1 @@
-export 'camera/camera.dart';
+export 'splash/home/camera_image_detector.dart';

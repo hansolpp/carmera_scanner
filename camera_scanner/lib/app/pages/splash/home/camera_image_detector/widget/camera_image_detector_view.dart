@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'dart:developer' as developer;
 
 import 'package:camera_scanner/core/camera/vision_detector/vision_detector_manager/vision_detector_manager.dart';
 import 'package:camera_scanner/app/pages/splash/home/camera/camera.dart';
@@ -22,10 +23,12 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
   );
   late RecognisedText recognisedText;
 
-  final overlayShape = ScannerOverlayShape(
-    cutOutWidth: 300,
-    cutOutHeight: 300,
-  );
+  final overlayShape = CameraScannerOverlayShape(targetRect: (Rect targetRect) {
+    developer.log('overlayShape.left:: ${targetRect.left}');
+    developer.log('overlayShape.top:: ${targetRect.top}');
+    developer.log('overlayShape.right:: ${targetRect.right}');
+    developer.log('overlayShape.bottom:: ${targetRect.bottom}');
+  });
 
   @override
   Widget build(BuildContext context) {

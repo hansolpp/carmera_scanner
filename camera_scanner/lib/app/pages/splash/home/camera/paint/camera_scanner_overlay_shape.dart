@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math';
 
-class ScannerOverlayShape extends ShapeBorder {
-  ScannerOverlayShape({
+class CameraScannerOverlayShape extends ShapeBorder {
+  CameraScannerOverlayShape({
     this.borderColor = Colors.red,
     this.borderWidth = 3.0,
     this.overlayColor = const Color.fromRGBO(0, 0, 0, 80),
@@ -13,6 +13,7 @@ class ScannerOverlayShape extends ShapeBorder {
     double? cutOutWidth,
     double? cutOutHeight,
     this.cutOutBottomOffset = 0,
+    this.targetRect,
   })  : cutOutWidth = cutOutWidth ?? cutOutSize ?? 250,
         cutOutHeight = cutOutHeight ?? cutOutSize ?? 250 {
     assert(
@@ -34,8 +35,7 @@ class ScannerOverlayShape extends ShapeBorder {
   final double cutOutWidth;
   final double cutOutHeight;
   final double cutOutBottomOffset;
-
-  Rect targetRect = const Rect.fromLTWH(0, 0, 0, 0);
+  final ValueChanged<Rect>? targetRect;
 
   @override
   EdgeInsetsGeometry get dimensions => const EdgeInsets.all(10);
@@ -110,8 +110,7 @@ class ScannerOverlayShape extends ShapeBorder {
       _cutOutWidth - borderOffset * 2,
       _cutOutHeight - borderOffset * 2,
     );
-
-    targetRect = cutOutRect;
+    targetRect?.call(cutOutRect);
 
     canvas
       ..saveLayer(
@@ -178,7 +177,7 @@ class ScannerOverlayShape extends ShapeBorder {
 
   @override
   ShapeBorder scale(double t) {
-    return ScannerOverlayShape(
+    return CameraScannerOverlayShape(
       borderColor: borderColor,
       borderWidth: borderWidth,
       overlayColor: overlayColor,

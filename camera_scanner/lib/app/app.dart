@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:camera_scanner/app/pages/splash/home/camera_image_detector.dart';
+import 'package:camera_scanner/app/pages/splash/home/camera_image_detector/camera_image_detector.dart';
 
 class MlCameraApp extends StatefulWidget {
   const MlCameraApp({Key? key}) : super(key: key);

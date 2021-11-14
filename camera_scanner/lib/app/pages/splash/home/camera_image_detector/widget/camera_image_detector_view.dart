@@ -16,14 +16,14 @@ class CameraImageDetectorView extends StatefulWidget {
 }
 
 class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
-  final VisionDetectorManager visionDetectorManager = VisionDetectorManager();
+  final VisionDetectorManager _visionDetectorManager = VisionDetectorManager();
   final CameraController _cameraController = CameraController(
     CameraManager.availableCamera[backCamera],
     ResolutionPreset.high,
   );
   late RecognisedText recognisedText;
-
-  final overlayShape = CameraScannerOverlayShape(targetRect: (Rect targetRect) {
+  late final CameraScannerOverlayShape _overlayShape =
+      CameraScannerOverlayShape(targetRect: (Rect targetRect) {
     developer.log('overlayShape.left:: ${targetRect.left}');
     developer.log('overlayShape.top:: ${targetRect.top}');
     developer.log('overlayShape.right:: ${targetRect.right}');
@@ -38,12 +38,12 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
         CameraPage(
           cameraController: _cameraController,
           onStream: (CameraImage image) async {
-            recognisedText = await visionDetectorManager.processImage(image);
+            recognisedText = await _visionDetectorManager.processImage(image);
           },
         ),
         Container(
           decoration: ShapeDecoration(
-            shape: overlayShape,
+            shape: _overlayShape,
           ),
         ),
       ],

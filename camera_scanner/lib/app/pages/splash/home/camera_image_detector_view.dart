@@ -22,6 +22,11 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
   );
   late RecognisedText recognisedText;
 
+  final overlayShape = ScannerOverlayShape(
+    cutOutWidth: 300,
+    cutOutHeight: 300,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -35,10 +40,7 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
         ),
         Container(
           decoration: ShapeDecoration(
-            shape: ScannerOverlayShape(
-              cutOutWidth: 300,
-              cutOutHeight: 300,
-            ),
+            shape: overlayShape,
           ),
         ),
       ],

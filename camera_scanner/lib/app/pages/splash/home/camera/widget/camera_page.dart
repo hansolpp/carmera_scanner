@@ -7,11 +7,13 @@ import 'package:camera_scanner/app/pages/splash/home/camera/camera.dart';
 class CameraPage extends StatefulWidget {
   const CameraPage({
     this.cameraController,
+    this.decoration,
     this.onStream,
     Key? key,
   }) : super(key: key);
 
   final CameraController? cameraController;
+  final Decoration? decoration;
   final ValueChanged<CameraImage>? onStream;
 
   static Route route() {
@@ -30,6 +32,7 @@ class _CameraPageSate extends State<CameraPage> {
   Widget build(BuildContext context) {
     return CameraView(
       cameraController: widget.cameraController,
+      decoration: widget.decoration,
       onStream: widget.onStream,
     );
   }

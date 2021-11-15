@@ -4,8 +4,8 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:developer' as developer;
 
 import 'package:camera_scanner/core/camera/vision_detector/vision_detector_manager/vision_detector_manager.dart';
-import 'package:camera_scanner/app/pages/splash/home/camera/camera.dart';
 import 'package:camera_scanner/core/camera/camera_manager/camera_manager.dart';
+import 'package:camera_scanner/app/pages/splash/home/camera/camera.dart';
 
 class CameraImageDetectorView extends StatefulWidget {
   const CameraImageDetectorView({Key? key}) : super(key: key);
@@ -37,14 +37,10 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
       children: <Widget>[
         CameraPage(
           cameraController: _cameraController,
+          decoration: ShapeDecoration(shape: _overlayShape),
           onStream: (CameraImage image) async {
             recognisedText = await _visionDetectorManager.processImage(image);
           },
-        ),
-        Container(
-          decoration: ShapeDecoration(
-            shape: _overlayShape,
-          ),
         ),
       ],
     );

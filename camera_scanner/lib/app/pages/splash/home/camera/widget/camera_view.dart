@@ -7,11 +7,13 @@ import 'package:camera_scanner/core/camera/camera.dart';
 class CameraView extends StatefulWidget {
   const CameraView({
     this.cameraController,
+    this.decoration,
     this.onStream,
     Key? key,
   }) : super(key: key);
 
   final CameraController? cameraController;
+  final Decoration? decoration;
   final ValueChanged<CameraImage>? onStream;
 
   @override
@@ -44,7 +46,10 @@ class _CameraViewState extends State<CameraView> {
       future: _isCameraInitialized,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return CameraPreview(_cameraController);
+          return CameraPreview(
+            _cameraController,
+            child: Container(decoration: widget.decoration),
+          );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -58,7 +63,9 @@ class _CameraViewState extends State<CameraView> {
   }) async {
     final CameraController cameraController = CameraController(
       CameraManager.availableCamera[position],
-      ResolutionPreset.high,
+      /// Know issue:: some device have frame drop problem(old device),
+      /// when ResolutionPreset is more than medium resolution
+      ResolutionPreset.medium,
     );
 
     _cameraController = controller ?? cameraController;

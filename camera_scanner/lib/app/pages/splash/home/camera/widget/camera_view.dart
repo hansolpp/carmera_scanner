@@ -63,8 +63,16 @@ class _CameraViewState extends State<CameraView> {
   }) async {
     final CameraController cameraController = CameraController(
       CameraManager.availableCamera[position],
-      /// Know issue:: some device have frame drop problem(old device),
+      /// Know issue:: some device has frame drop problem(old device),
       /// when ResolutionPreset is more than medium resolution
+      /// --------------------------------------------------------------------
+      /// low : 352x288 on iOS, 240p (320x240) on Android and Web
+      /// medium : 480p (640x480 on iOS, 720x480 on Android and Web)
+      /// high : 720p (1280x720)
+      /// max : The highest resolution available.
+      /// veryHigh : 1080p (1920x1080)
+      /// ultraHigh : 2160p (3840x2160 on Android and iOS, 4096x2160 on Web)
+      /// --------------------------------------------------------------------
       ResolutionPreset.medium,
     );
 

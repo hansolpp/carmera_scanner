@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DependencyInjection extends StatelessWidget {
-  const DependencyInjection({
+class InjectionContainer extends StatelessWidget {
+  const InjectionContainer({
     required this.child,
     this.isNotRequired = false,
     Key? key,

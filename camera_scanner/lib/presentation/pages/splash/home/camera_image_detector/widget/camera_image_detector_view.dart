@@ -5,7 +5,7 @@ import 'dart:developer' as developer;
 
 import 'package:camera_scanner/core/camera/vision_detector/vision_detector_manager/vision_detector_manager.dart';
 import 'package:camera_scanner/core/camera/camera_manager/camera_manager.dart';
-import 'package:camera_scanner/app/pages/splash/home/camera/camera.dart';
+import 'package:camera_scanner/presentation/pages/splash/home/camera/camera.dart';
 
 class CameraImageDetectorView extends StatefulWidget {
   const CameraImageDetectorView({Key? key}) : super(key: key);

@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:camera_scanner/core/route/route_name.dart';
-import 'package:camera_scanner/app/pages/splash/home/camera/camera.dart';
+import 'package:camera_scanner/presentation/pages/splash/home/camera/camera.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({

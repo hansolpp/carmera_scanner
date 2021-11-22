@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:camera_scanner/core/route/route_name.dart';
-import 'package:camera_scanner/app/pages/splash/home/camera_image_detector/camera_image_detector.dart';
+import 'package:camera_scanner/presentation/pages/splash/home/camera_image_detector/camera_image_detector.dart';
 
 class CameraImageDetectorPage extends StatefulWidget {
   const CameraImageDetectorPage({Key? key}) : super(key: key);

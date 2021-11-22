@@ -39,6 +39,7 @@ class _CameraImageDetectorViewState extends State<CameraImageDetectorView> {
           cameraController: _cameraController,
           decoration: ShapeDecoration(shape: _overlayShape),
           onStream: (CameraImage image) async {
+            // TODO : isolate 사용하여 구현해보고 성능 차이 측정하기
             recognisedText = await _visionDetectorManager.processImage(image);
           },
         ),

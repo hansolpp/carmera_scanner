@@ -1,18 +1,20 @@
 import 'dart:typed_data';
+import 'dart:developer' as developer;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'dart:developer' as developer;
 
 import 'package:camera_scanner/core/camera/vision_detector/vision_detector.dart';
+import 'package:camera_scanner/core/constants/constants.dart';
 
 class VisionDetectorManager {
   VisionDetectorManager() : textDetector = GoogleMlKit.vision.textDetector();
 
   TextDetector textDetector;
   CustomPaint? customPaint;
+  int beforeMilliSeconds = 0;
   bool _isBusy = false;
 
   get isBusy => _isBusy;
@@ -21,7 +23,15 @@ class VisionDetectorManager {
     RecognisedText recognisedText =
         RecognisedText.fromMap({'text': '', 'blocks': []});
 
-    if (_isBusy) return recognisedText;
+    int milliseconds = DateTime.now().millisecondsSinceEpoch;
+    if (milliseconds - beforeMilliSeconds <= mlProcessingIntervalMillis) {
+      return recognisedText;
+    }
+    beforeMilliSeconds = milliseconds;
+
+    if (_isBusy) {
+      return recognisedText;
+    }
     _isBusy = true;
 
     InputImage inputImage = _convertInputImage(cameraImage);

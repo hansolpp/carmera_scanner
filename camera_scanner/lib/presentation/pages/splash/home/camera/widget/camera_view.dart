@@ -73,7 +73,7 @@ class _CameraViewState extends State<CameraView> {
       /// veryHigh : 1080p (1920x1080)
       /// ultraHigh : 2160p (3840x2160 on Android and iOS, 4096x2160 on Web)
       /// --------------------------------------------------------------------
-      ResolutionPreset.medium,
+      ResolutionPreset.high,
     );
 
     _cameraController = controller ?? cameraController;

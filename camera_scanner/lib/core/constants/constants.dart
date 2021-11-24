@@ -1,0 +1,1 @@
+const mlProcessingIntervalMillis = 1000;

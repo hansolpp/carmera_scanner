@@ -10,5 +10,5 @@
     - google_ml_kit : 0.7.3
 
 - TODO List
-    - isolate 에 textDetector.processImage() 적용
+    - isolate 에 textDetector.processImage() -> static 이라 image stream에 대한 처리 불가능
     - processImage() 1초 interval 적용(완료)
